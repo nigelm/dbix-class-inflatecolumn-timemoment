@@ -1,4 +1,4 @@
 {{$NEXT}}
     - Initial implementation
     - Very basic tests
-    - Added travis integration
+    - Added travis integration after much fiddling
