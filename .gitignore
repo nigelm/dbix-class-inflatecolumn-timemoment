@@ -1,0 +1,36 @@
+# avoid version control files.
+.git
+
+# avoid temp and backup files.
+*~
+*#
+*.bak
+*.old
+*.rej
+*.swp
+*.tmp
+.DS_Store
+
+# avoid utility files
+.build
+_build
+
+# avoid compiled gettext files
+*.mo
+
+# avoid archives of this distribution
+DBIx-Class-InflateColumn-TimeMoment-*
+
+# stuff thats part of the build
+blib*
+Makefile
+Build
+Build.bat
+_build*
+pm_to_blib*
+*.tar.gz
+META.yml
+tmp
+.tidyall.d
+
+# end

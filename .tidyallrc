@@ -1,0 +1,16 @@
+[PerlTidy]
+argv =  --profile=$ROOT/.perltidyrc
+select = **/*.{pl,pm,t}
+
+[PodTidy]
+select = */**/*.{pl,pm,pod}
+
+[PerlCritic]
+select = **/*.{pl,pm}
+except_modes = editor
+
+[Perl::AlignMooseAttributes]
+select = **/*.{pl,pm,t}
+
+[Perl::IgnoreMethodSignaturesSimple]
+select = **/*.{pl,pm,t}
