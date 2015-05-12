@@ -11,12 +11,12 @@ before_install:
 
 install:
   # Deal with all the DZIL dependencies, quickly and quietly
-  - cpanm --quiet --notest --skip-satisfied Dist::Zilla
-  - cpanm --quiet --notest --skip-satisfied Pod::Markdown
-  - cpanm --quiet --notest --skip-satisfied Pod::Coverage::TrustPod
-  - dzil authordeps | grep -vP '[^\w:]' | xargs -n 5 -P 10 cpanm --quiet --notest --skip-satisfied
-  - export RELEASE_TESTING=1 AUTOMATED_TESTING=1 AUTHOR_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1 DBIC_NO_WARN_BAD_PERL=1
-  - dzil listdeps | cpanm --verbose --notest --skip-satisfied
+  - cpanm --notest --skip-satisfied Dist::Zilla
+  - cpanm --notest --skip-satisfied Pod::Markdown
+  - cpanm --notest --skip-satisfied Pod::Coverage::TrustPod
+  - dzil authordeps | xargs -n 5 -P 10 cpanm --quiet --notest --skip-satisfied
+  - export DBIC_NO_WARN_BAD_PERL=1
+  - dzil listdeps | xargs cpanm --verbose --notest --skip-satisfied
 
 script:
-  - dzil test
+  - dzil test --all
