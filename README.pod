@@ -1,23 +1,17 @@
-package DBIx::Class::InflateColumn::TimeMoment;
+=pod
 
-# ABSTRACT: Auto-create TimeMoment objects from date and datetime columns.
-
-use 5.008;    # enforce minimum perl version of 5.8
-use strict;
-use warnings;
-
-# VERSION
-# AUTHORITY
-
-=begin :prelude
-
-=for test_synopsis
-1;
+=for test_synopsis 1;
 __END__
 
 =for stopwords DBIC
 
-=end :prelude
+=head1 NAME
+
+DBIx::Class::InflateColumn::TimeMoment - Auto-create TimeMoment objects from date and datetime columns.
+
+=head1 VERSION
+
+version 0.01
 
 =head1 SYNOPSIS
 
@@ -69,15 +63,6 @@ make them do something sensible.
 For more help with using components, see
 L<DBIx::Class::Manual::Component/USING>.
 
-=cut
-
-use base qw/DBIx::Class/;
-use DBIx::Class::Carp;
-use Try::Tiny;
-use namespace::clean;
-
-__PACKAGE__->load_components(qw/InflateColumn/);
-
 =head2 register_column
 
 Chains with the L<DBIx::Class::Row/register_column> method, and sets up
@@ -95,84 +80,6 @@ C<datetime_undef_if_invalid> option in the column info:
         is_nullable => 1,
         datetime_undef_if_invalid => 1
     }
-
-=cut
-
-sub register_column {
-    my ( $self, $column, $info, @rest ) = @_;
-
-    $self->next::method( $column, $info, @rest );
-
-    my $requested_type;
-    for (qw/datetime timestamp date/) {
-        my $key = "inflate_${_}";
-        if ( exists $info->{$key} ) {
-
-            # this bailout is intentional
-            return unless $info->{$key};
-
-            $requested_type = $_;
-            last;
-        }
-    }
-
-    return if ( !$requested_type and !$info->{data_type} );
-
-    my $data_type = lc( $info->{data_type} || '' );
-
-    return unless ( ( $data_type eq 'datetime' ) or ( $data_type eq 'timestamp' ) or ( $data_type eq 'date' ) );
-
-    # shallow copy to avoid unfounded(?) Devel::Cycle complaints
-    my $infcopy = {%$info};
-
-    $self->inflate_column(
-        $column => {
-            inflate => sub {
-                my ( $value, $obj ) = @_;
-
-                # propagate for error reporting
-                $infcopy->{__dbic_colname} = $column;
-
-                my $dt = $obj->_inflate_to_timemoment( $value, $infcopy );
-
-                return ( defined $dt )
-                    ? $obj->_post_inflate_timemoment( $dt, $infcopy )
-                    : undef;
-            },
-            deflate => sub {
-                my ( $value, $obj ) = @_;
-
-                $value = $obj->_pre_deflate_timemoment( $value, $infcopy );
-                $obj->_deflate_from_timemoment( $value, $infcopy );
-            },
-        }
-    );
-}
-
-sub _inflate_to_timemoment {
-    my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value);
-}
-
-sub _deflate_from_timemoment {
-    my ( $self, $value ) = @_;
-    return $value->to_string;
-}
-
-sub _post_inflate_timemoment {
-    my ( $self, $dt ) = @_;
-
-    return $dt;
-}
-
-sub _pre_deflate_timemoment {
-    my ( $self, $dt ) = @_;
-
-    return $dt;
-}
-
-1;
-__END__
 
 =head1 HISTORY
 
@@ -195,3 +102,32 @@ and formatter ecosystem.
 Check the list of L<additional DBIC resources|DBIx::Class/GETTING
 HELP/SUPPORT>.
 
+=head1 INSTALLATION
+
+See perlmodinstall for information and options on installing Perl modules.
+
+=head1 BUGS AND LIMITATIONS
+
+You can make new bug reports, and view existing ones, through the
+web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBIx-Class-InflateColumn-TimeMoment>.
+
+=head1 AVAILABILITY
+
+The project homepage is L<https://metacpan.org/release/DBIx-Class-InflateColumn-TimeMoment>.
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<https://metacpan.org/module/DBIx::Class::InflateColumn::TimeMoment/>.
+
+=head1 AUTHOR
+
+Nigel Metheringham <nigelm@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Nigel Metheringham.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
