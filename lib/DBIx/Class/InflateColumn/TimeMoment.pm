@@ -72,7 +72,6 @@ L<DBIx::Class::Manual::Component/USING>.
 =cut
 
 use base qw/DBIx::Class/;
-use DBIx::Class::Carp;
 use Try::Tiny;
 use namespace::clean;
 
