@@ -43,7 +43,6 @@
       "runtime" : {
          "requires" : {
             "DBIx::Class" : "0",
-            "DBIx::Class::Carp" : "0",
             "Try::Tiny" : "0",
             "base" : "0",
             "namespace::clean" : "0",
@@ -71,7 +70,7 @@
    "provides" : {
       "DBIx::Class::InflateColumn::TimeMoment" : {
          "file" : "lib/DBIx/Class/InflateColumn/TimeMoment.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       }
    },
    "release_status" : "stable",
@@ -87,7 +86,7 @@
          "web" : "https://github.com/nigelm/dbix-class-inflatecolumn-timemoment"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.020001"
@@ -562,7 +561,7 @@
                "Dist::Zilla::Plugin::Git::Tag" : {
                   "branch" : null,
                   "signed" : 0,
-                  "tag" : "release/0.01",
+                  "tag" : "release/0.02",
                   "tag_format" : "release/%v%t",
                   "tag_message" : "Release of %v%t",
                   "time_zone" : "local"

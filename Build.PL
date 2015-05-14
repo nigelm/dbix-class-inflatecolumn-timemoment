@@ -21,14 +21,13 @@ my %module_build_args = (
     "Nigel Metheringham <nigelm\@cpan.org>"
   ],
   "dist_name" => "DBIx-Class-InflateColumn-TimeMoment",
-  "dist_version" => "0.01",
+  "dist_version" => "0.02",
   "license" => "perl",
   "module_name" => "DBIx::Class::InflateColumn::TimeMoment",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
     "DBIx::Class" => 0,
-    "DBIx::Class::Carp" => 0,
     "Try::Tiny" => 0,
     "base" => 0,
     "namespace::clean" => 0,

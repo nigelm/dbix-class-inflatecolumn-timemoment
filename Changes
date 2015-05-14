@@ -1,3 +1,6 @@
+0.02      2015-05-14 10:59:29+01:00 Europe/London
+    - Removed DBIx::Class::Carp as not used and causes dep issues
+
 0.01      2015-05-12 16:55:43+01:00 Europe/London
     - Initial implementation
     - Very basic tests

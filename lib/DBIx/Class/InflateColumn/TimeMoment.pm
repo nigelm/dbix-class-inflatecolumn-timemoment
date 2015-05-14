@@ -6,12 +6,11 @@ use 5.008;    # enforce minimum perl version of 5.8
 use strict;
 use warnings;
 
-our $VERSION = '0.01'; # VERSION
+our $VERSION = '0.02'; # VERSION
 our $AUTHORITY = 'cpan:NIGELM'; # AUTHORITY
 
 
 use base qw/DBIx::Class/;
-use DBIx::Class::Carp;
 use Try::Tiny;
 use namespace::clean;
 
@@ -108,7 +107,7 @@ DBIx::Class::InflateColumn::TimeMoment - Auto-create TimeMoment objects from dat
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
