@@ -5,6 +5,7 @@ package DBIx::Class::InflateColumn::TimeMoment;
 use 5.008;    # enforce minimum perl version of 5.8
 use strict;
 use warnings;
+use boolean;
 
 # VERSION
 # AUTHORITY
@@ -150,7 +151,13 @@ sub register_column {
 
 sub _inflate_to_timemoment {
     my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value, lenient => 1);
+
+    # add Z postfix to designate UTC timezone
+    # done to avoid error when parsing timestamps without timezone
+    $value .= "Z"
+      if($value !~ m|z|gi);
+
+    return Time::Moment->from_string($value, lenient => true);
 }
 
 sub _deflate_from_timemoment {
