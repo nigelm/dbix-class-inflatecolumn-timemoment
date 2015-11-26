@@ -1,0 +1,39 @@
+{
+   "abstract" : "unknown",
+   "author" : [
+      "unknown"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Build version 0.421",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Class-Accessor-Chained",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Class::Accessor" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "Class::Accessor::Chained" : {
+         "file" : "lib/Class/Accessor/Chained.pm",
+         "version" : "0.01"
+      },
+      "Class::Accessor::Chained::Fast" : {
+         "file" : "lib/Class/Accessor/Chained/Fast.pm"
+      }
+   },
+   "release_status" : "stable",
+   "version" : "0.01"
+}

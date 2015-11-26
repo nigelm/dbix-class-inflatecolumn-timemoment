@@ -1,0 +1,75 @@
+{
+   "abstract" : "Generate SQL from Perl data structures",
+   "author" : [
+      "Nathan Wiger <nate@wiger.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Install version 1.06, CPAN::Meta::Converter version 2.142690",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "SQL-Abstract",
+   "no_index" : {
+      "directory" : [
+         "examples",
+         "inc",
+         "t",
+         "xt"
+      ],
+      "package" : [
+         "DBIx::Class::Storage::Debug::PrettyPrint"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59",
+            "Storable" : "0",
+            "Test::Deep" : "0.101",
+            "Test::Exception" : "0.31",
+            "Test::More" : "0.88",
+            "Test::Warn" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.59"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Exporter" : "5.57",
+            "Hash::Merge" : "0.12",
+            "List::Util" : "0",
+            "MRO::Compat" : "0.12",
+            "Moo" : "1.004002",
+            "Scalar::Util" : "0",
+            "Storable" : "0",
+            "Test::Deep" : "0.101",
+            "Test::Exception" : "0.31",
+            "Test::More" : "0.88",
+            "Test::Warn" : "0",
+            "Text::Balanced" : "2.00",
+            "perl" : "5.006"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "http://rt.cpan.org/NoAuth/Bugs.html?Dist=SQL-Abstract"
+      },
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "url" : "https://github.com/dbsrgits/sql-abstract/"
+      },
+      "x_IRC" : "irc://irc.perl.org/#dbix-class"
+   },
+   "version" : "1.81"
+}

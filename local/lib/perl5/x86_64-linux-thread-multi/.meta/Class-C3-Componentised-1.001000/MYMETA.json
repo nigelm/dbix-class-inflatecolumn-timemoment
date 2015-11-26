@@ -1,0 +1,55 @@
+{
+   "abstract" : "unknown",
+   "author" : [
+      "Ash Berlin <ash@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Install version 1.01, CPAN::Meta::Converter version 2.142690",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Class-C3-Componentised",
+   "no_index" : {
+      "directory" : [
+         "inc",
+         "t"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.42"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.42"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : "0",
+            "Class::C3" : "0.20",
+            "Class::Inspector" : "0",
+            "MRO::Compat" : "0",
+            "Test::Exception" : "0",
+            "perl" : "5.006002"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "type" : "git",
+         "url" : "git://git.shadowcat.co.uk/p5sagit/Class-C3-Componentised.git"
+      }
+   },
+   "version" : "1.001000"
+}

@@ -1,0 +1,38 @@
+{
+   "abstract" : "help when paging through sets of results",
+   "author" : [
+      "Based on code originally by Leo Lapworth, with many changes added by\nby Leon Brocard <acme@astray.com>."
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Module::Build version 0.421",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Data-Page",
+   "prereqs" : {
+      "runtime" : {
+         "requires" : {
+            "Class::Accessor::Chained::Fast" : "0",
+            "Test::Exception" : "0",
+            "Test::More" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "Data::Page" : {
+         "file" : "lib/Data/Page.pm",
+         "version" : "2.02"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "2.02"
+}

@@ -151,11 +151,13 @@ sub register_column {
 
 sub _inflate_to_timemoment {
     my ( $self, $value ) = @_;
+    my $storage = $self->result_source->storage;
 
-    # add Z postfix to designate UTC timezone
-    # done to avoid error when parsing timestamps without timezone
-    $value .= "Z"
-      if($value !~ m|z|gi);
+    # check if current driver is postgresql
+    if($storage->dbh->get_info(17) eq 'PostgreSQL') {
+      # add 'Z' to designate utc timestamp
+      $value .= "Z" if ($value !~ m/(z|\+)/gi);
+    }
 
     return Time::Moment->from_string($value, lenient => true);
 }
