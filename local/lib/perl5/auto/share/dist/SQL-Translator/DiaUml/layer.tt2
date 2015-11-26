@@ -1,6 +1,0 @@
-[%- 
-    DEFAULT name="Layer1" visible="true"
-%]
-  <dia:layer name="[% name %]" visible="[% visible %]">
-  [% content %]
-  </dia:layer>
