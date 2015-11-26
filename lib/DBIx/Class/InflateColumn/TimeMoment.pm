@@ -150,7 +150,7 @@ sub register_column {
 
 sub _inflate_to_timemoment {
     my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value);
+    return Time::Moment->from_string($value, lenient => 1);
 }
 
 sub _deflate_from_timemoment {
