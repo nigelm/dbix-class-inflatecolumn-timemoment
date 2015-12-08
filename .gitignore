@@ -1,3 +1,4 @@
+local/
 # avoid version control files.
 .git
 

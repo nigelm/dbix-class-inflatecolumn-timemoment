@@ -5,6 +5,7 @@ package DBIx::Class::InflateColumn::TimeMoment;
 use 5.008;    # enforce minimum perl version of 5.8
 use strict;
 use warnings;
+use boolean;
 
 # VERSION
 # AUTHORITY
@@ -150,7 +151,15 @@ sub register_column {
 
 sub _inflate_to_timemoment {
     my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value);
+    my $storage = $self->result_source->storage;
+
+    # check if current driver is postgresql
+    if($storage->dbh->get_info(17) eq 'PostgreSQL') {
+      # add 'Z' to designate utc timestamp
+      $value .= "Z" if ($value !~ m/(z|\+)/gi);
+    }
+
+    return Time::Moment->from_string($value, lenient => true);
 }
 
 sub _deflate_from_timemoment {
