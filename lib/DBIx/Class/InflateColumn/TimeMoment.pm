@@ -35,9 +35,6 @@ timestamp or date datatype.
 
 Then you can treat the specified column as a L<TimeMoment> object.
 
-  print "This event starts the month of ".
-    $event->starts_when->strftime('%B');
-
 If you want to inflate no matter what data_type your column is, use
 inflate_datetime or inflate_date:
 
@@ -54,6 +51,10 @@ It's also possible to explicitly skip inflation:
   __PACKAGE__->add_columns(
     starts_when => { data_type => 'datetime', inflate_datetime => 0 }
   );
+
+=for test_synopsis BEGIN { die "SKIP: event has not been declared\n"; }
+  print "This event starts the month of ".
+    $event->starts_when->strftime('%B');
 
 NOTE: Don't rely on C<InflateColumn::TimeMoment> to parse date strings for you.
 The column is set directly for any non-references and
