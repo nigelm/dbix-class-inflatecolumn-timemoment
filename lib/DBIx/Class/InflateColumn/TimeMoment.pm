@@ -15,7 +15,7 @@ use warnings;
 1;
 __END__
 
-=for stopwords DBIC
+=for stopwords DBIC Nikita Dubrovin
 
 =end :prelude
 
@@ -152,8 +152,16 @@ sub register_column {
 sub _inflate_to_timemoment {
     my ( $self, $value, $info ) = @_;
 
+    # Any value should include a timezone element
+    # Should a value not include any timezone element, we add a Z to force
+    # the timestamp into GMT.  This will not fix any other syntax issues,
+    # but does allow, eg PostgreSQL timestamps to be inflated correctly
+    # MATCHES: Z or +/- 2 digit timestamp or 4 digit timestamp or UTC/GMT
+    $value .= 'Z'
+        unless ( $value =~ /(?: Z | (?: [+-] \d{2} (?: :? \d{2} )? ) | UTC | GMT )$/x );
+
     return try {
-        Time::Moment->from_string($value);
+        Time::Moment->from_string( $value, lenient => 1 );
     }
     catch {
         $self->throw_exception("Error while inflating '$value' for $info->{__dbic_colname} on ${self}: $_")
@@ -188,6 +196,16 @@ As is obvious from a quick inspection of the code, this module is very heavily
 based on and draws code from L<DBIx::Class::InflateColumn::DateTime>, however
 it is significantly simplified due to the less well developed timezone handling
 and formatter ecosystem.
+
+Thank you to the following for contributions, suggestions or ideas:-
+
+=over 4
+
+=item Nikita Dubrovin
+
+=item Cameron Daniel
+
+=back
 
 =head1 SEE ALSO
 

@@ -1,4 +1,7 @@
 {{$NEXT}}
+    - Timestamp parser made more lenient and allows missing
+      timezone (assumes Z - ie GMT).  Hence works for Pg
+    - Implemented datetime_undef_if_invalid
 
 0.02      2015-05-14 10:59:29+01:00 Europe/London
     - Removed DBIx::Class::Carp as not used and causes dep issues
