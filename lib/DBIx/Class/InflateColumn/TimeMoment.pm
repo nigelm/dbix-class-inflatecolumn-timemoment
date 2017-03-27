@@ -15,7 +15,7 @@ use warnings;
 1;
 __END__
 
-=for stopwords DBIC Nikita Dubrovin
+=for stopwords DBIC
 
 =end :prelude
 
@@ -196,16 +196,6 @@ As is obvious from a quick inspection of the code, this module is very heavily
 based on and draws code from L<DBIx::Class::InflateColumn::DateTime>, however
 it is significantly simplified due to the less well developed timezone handling
 and formatter ecosystem.
-
-Thank you to the following for contributions, suggestions or ideas:-
-
-=over 4
-
-=item Nikita Dubrovin
-
-=item Cameron Daniel
-
-=back
 
 =head1 SEE ALSO
 
