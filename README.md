@@ -11,7 +11,7 @@ DBIx::Class::InflateColumn::TimeMoment - Auto-create TimeMoment objects from dat
 
 # VERSION
 
-version 0.001
+version 0.050
 
 # SYNOPSIS
 
