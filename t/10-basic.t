@@ -62,4 +62,97 @@ my $rs = $schema->resultset('Example');
     is $retrieved->dt->to_string, '2014-12-20T15:00:00+02:00', '... correct date';
 }
 
+{
+    my $result = $rs->create(
+        {   id => 3,
+            dt => Time::Moment->new(
+                year       => '2014',
+                month      => '12',
+                day        => '20',
+                hour       => '15',
+                minute     => 0,
+                second     => 0,
+                nanosecond => 123456789,
+                offset     => 120,
+            )
+        }
+    );
+
+    isa_ok $result, 'Test::Schema::Result::Example';
+    isa_ok $result->dt, 'Time::Moment';
+    undef $result;
+
+    my $retrieved = $rs->find(3);
+    isa_ok $retrieved, 'Test::Schema::Result::Example';
+    isa_ok $retrieved->dt, 'Time::Moment';
+    is $retrieved->dt->to_string, '2014-12-20T15:00:00.123456789+02:00', '... correct date';
+}
+
+{
+    my $result = $rs->create(
+        {   id => 4,
+            dt => '2014-12-20T15:00:00.123456789+02:00',
+        }
+    );
+
+    isa_ok $result, 'Test::Schema::Result::Example';
+    isa_ok $result->dt, 'Time::Moment';
+    undef $result;
+
+    my $retrieved = $rs->find(4);
+    isa_ok $retrieved, 'Test::Schema::Result::Example';
+    isa_ok $retrieved->dt, 'Time::Moment';
+    is $retrieved->dt->to_string, '2014-12-20T15:00:00.123456789+02:00', '... correct date';
+}
+
+{
+    my $result = $rs->create(
+        {   id => 5,
+            dt => '2014-12-20T15:00:00.12345Z',
+        }
+    );
+
+    isa_ok $result, 'Test::Schema::Result::Example';
+    isa_ok $result->dt, 'Time::Moment';
+    undef $result;
+
+    my $retrieved = $rs->find(5);
+    isa_ok $retrieved, 'Test::Schema::Result::Example';
+    isa_ok $retrieved->dt, 'Time::Moment';
+    is $retrieved->dt->to_string, '2014-12-20T15:00:00.123450Z', '... correct date';
+}
+
+{
+    my $result = $rs->create(
+        {   id => 6,
+            dt => '2014-12-20T99:99:99.12345',    # Broken timestamp
+        }
+    );
+
+    isa_ok $result, 'Test::Schema::Result::Example';
+    is $result->dt, undef, 'undef not Time::Moment';
+    undef $result;
+
+    my $retrieved = $rs->find(6);
+    isa_ok $retrieved, 'Test::Schema::Result::Example';
+    is $retrieved->dt, undef, 'undef not Time::Moment';
+}
+
+{
+    my $result = $rs->create(
+        {   id => 7,
+            dt => '2014-12-20 15:00:00.12345',    # PostgreSQL style
+        }
+    );
+
+    isa_ok $result, 'Test::Schema::Result::Example';
+    isa_ok $result->dt, 'Time::Moment';
+    undef $result;
+
+    my $retrieved = $rs->find(7);
+    isa_ok $retrieved, 'Test::Schema::Result::Example';
+    isa_ok $retrieved->dt, 'Time::Moment';
+    is $retrieved->dt->to_string, '2014-12-20T15:00:00.123450Z', '... correct date';
+}
+
 done_testing;

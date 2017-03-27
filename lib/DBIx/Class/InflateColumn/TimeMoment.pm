@@ -6,7 +6,7 @@ use 5.008;    # enforce minimum perl version of 5.8
 use strict;
 use warnings;
 
-our $VERSION = '0.02'; # VERSION
+our $VERSION = '0.050'; # VERSION
 our $AUTHORITY = 'cpan:NIGELM'; # AUTHORITY
 
 
@@ -69,8 +69,24 @@ sub register_column {
 }
 
 sub _inflate_to_timemoment {
-    my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value);
+    my ( $self, $value, $info ) = @_;
+
+    # Any value should include a timezone element
+    # Should a value not include any timezone element, we add a Z to force
+    # the timestamp into GMT.  This will not fix any other syntax issues,
+    # but does allow, eg PostgreSQL timestamps to be inflated correctly
+    # MATCHES: Z or +/- 2 digit timestamp or 4 digit timestamp or UTC/GMT
+    $value .= 'Z'
+        unless ( $value =~ /(?: Z | (?: [+-] \d{2} (?: :? \d{2} )? ) | UTC | GMT )$/x );
+
+    return try {
+        Time::Moment->from_string( $value, lenient => 1 );
+    }
+    catch {
+        $self->throw_exception("Error while inflating '$value' for $info->{__dbic_colname} on ${self}: $_")
+            unless $info->{datetime_undef_if_invalid};
+        undef;    # rv
+    };
 }
 
 sub _deflate_from_timemoment {
@@ -96,10 +112,7 @@ __END__
 
 =pod
 
-=for test_synopsis 1;
-__END__
-
-=for stopwords DBIC
+=encoding UTF-8
 
 =head1 NAME
 
@@ -107,7 +120,12 @@ DBIx::Class::InflateColumn::TimeMoment - Auto-create TimeMoment objects from dat
 
 =head1 VERSION
 
-version 0.02
+version 0.050
+
+=for test_synopsis 1;
+__END__
+
+=for stopwords DBIC
 
 =head1 SYNOPSIS
 
@@ -125,9 +143,6 @@ timestamp or date datatype.
 
 Then you can treat the specified column as a L<TimeMoment> object.
 
-  print "This event starts the month of ".
-    $event->starts_when->strftime('%B');
-
 If you want to inflate no matter what data_type your column is, use
 inflate_datetime or inflate_date:
 
@@ -144,11 +159,6 @@ It's also possible to explicitly skip inflation:
   __PACKAGE__->add_columns(
     starts_when => { data_type => 'datetime', inflate_datetime => 0 }
   );
-
-NOTE: Don't rely on C<InflateColumn::TimeMoment> to parse date strings for you.
-The column is set directly for any non-references and
-C<InflateColumn::TimeMoment> is completely bypassed.  Instead, use an input
-parser to create a TimeMoment object.
 
 =head1 DESCRIPTION
 
@@ -177,6 +187,15 @@ C<datetime_undef_if_invalid> option in the column info:
         datetime_undef_if_invalid => 1
     }
 
+=for test_synopsis BEGIN { die "SKIP: event has not been declared\n"; }
+  print "This event starts the month of ".
+    $event->starts_when->strftime('%B');
+
+NOTE: Don't rely on C<InflateColumn::TimeMoment> to parse date strings for you.
+The column is set directly for any non-references and
+C<InflateColumn::TimeMoment> is completely bypassed.  Instead, use an input
+parser to create a TimeMoment object.
+
 =head1 HISTORY
 
 As is obvious from a quick inspection of the code, this module is very heavily
@@ -198,30 +217,13 @@ and formatter ecosystem.
 Check the list of L<additional DBIC resources|DBIx::Class/GETTING
 HELP/SUPPORT>.
 
-=head1 INSTALLATION
-
-See perlmodinstall for information and options on installing Perl modules.
-
-=head1 BUGS AND LIMITATIONS
-
-You can make new bug reports, and view existing ones, through the
-web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBIx-Class-InflateColumn-TimeMoment>.
-
-=head1 AVAILABILITY
-
-The project homepage is L<https://metacpan.org/release/DBIx-Class-InflateColumn-TimeMoment>.
-
-The latest version of this module is available from the Comprehensive Perl
-Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<https://metacpan.org/module/DBIx::Class::InflateColumn::TimeMoment/>.
-
 =head1 AUTHOR
 
 Nigel Metheringham <nigelm@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Nigel Metheringham.
+This software is copyright (c) 2015-2017 by Nigel Metheringham.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
