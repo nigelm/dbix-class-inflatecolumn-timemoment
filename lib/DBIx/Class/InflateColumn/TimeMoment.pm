@@ -150,8 +150,16 @@ sub register_column {
 }
 
 sub _inflate_to_timemoment {
-    my ( $self, $value ) = @_;
-    return Time::Moment->from_string($value);
+    my ( $self, $value, $info ) = @_;
+
+    return try {
+        Time::Moment->from_string($value);
+    }
+    catch {
+        $self->throw_exception("Error while inflating '$value' for $info->{__dbic_colname} on ${self}: $_")
+            unless $info->{datetime_undef_if_invalid};
+        undef;    # rv
+    };
 }
 
 sub _deflate_from_timemoment {

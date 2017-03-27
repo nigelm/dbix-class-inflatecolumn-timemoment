@@ -1,9 +1,6 @@
 =pod
 
-=for test_synopsis 1;
-__END__
-
-=for stopwords DBIC
+=encoding UTF-8
 
 =head1 NAME
 
@@ -11,7 +8,12 @@ DBIx::Class::InflateColumn::TimeMoment - Auto-create TimeMoment objects from dat
 
 =head1 VERSION
 
-version 0.02
+version 0.03
+
+=for test_synopsis 1;
+__END__
+
+=for stopwords DBIC
 
 =head1 SYNOPSIS
 
@@ -29,9 +31,6 @@ timestamp or date datatype.
 
 Then you can treat the specified column as a L<TimeMoment> object.
 
-  print "This event starts the month of ".
-    $event->starts_when->strftime('%B');
-
 If you want to inflate no matter what data_type your column is, use
 inflate_datetime or inflate_date:
 
@@ -48,11 +47,6 @@ It's also possible to explicitly skip inflation:
   __PACKAGE__->add_columns(
     starts_when => { data_type => 'datetime', inflate_datetime => 0 }
   );
-
-NOTE: Don't rely on C<InflateColumn::TimeMoment> to parse date strings for you.
-The column is set directly for any non-references and
-C<InflateColumn::TimeMoment> is completely bypassed.  Instead, use an input
-parser to create a TimeMoment object.
 
 =head1 DESCRIPTION
 
@@ -81,6 +75,15 @@ C<datetime_undef_if_invalid> option in the column info:
         datetime_undef_if_invalid => 1
     }
 
+=for test_synopsis BEGIN { die "SKIP: event has not been declared\n"; }
+  print "This event starts the month of ".
+    $event->starts_when->strftime('%B');
+
+NOTE: Don't rely on C<InflateColumn::TimeMoment> to parse date strings for you.
+The column is set directly for any non-references and
+C<InflateColumn::TimeMoment> is completely bypassed.  Instead, use an input
+parser to create a TimeMoment object.
+
 =head1 HISTORY
 
 As is obvious from a quick inspection of the code, this module is very heavily
@@ -102,22 +105,24 @@ and formatter ecosystem.
 Check the list of L<additional DBIC resources|DBIx::Class/GETTING
 HELP/SUPPORT>.
 
-=head1 INSTALLATION
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
 
-See perlmodinstall for information and options on installing Perl modules.
+=head1 SUPPORT
 
-=head1 BUGS AND LIMITATIONS
+=head2 Bugs / Feature Requests
 
-You can make new bug reports, and view existing ones, through the
-web interface at L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBIx-Class-InflateColumn-TimeMoment>.
+Please report any bugs or feature requests through the issue tracker
+at L<http://rt.cpan.org/Public/Dist/Display.html?Name=DBIx-Class-InflateColumn-TimeMoment>.
+You will be notified automatically of any progress on your issue.
 
-=head1 AVAILABILITY
+=head2 Source Code
 
-The project homepage is L<https://metacpan.org/release/DBIx-Class-InflateColumn-TimeMoment>.
+This is open source software.  The code repository is available for
+public review and contribution under the terms of the license.
 
-The latest version of this module is available from the Comprehensive Perl
-Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<https://metacpan.org/module/DBIx::Class::InflateColumn::TimeMoment/>.
+L<https://github.com/nigelm/dbix-class-inflatecolumn-timemoment>
+
+  git clone https://github.com/nigelm/dbix-class-inflatecolumn-timemoment.git
 
 =head1 AUTHOR
 
