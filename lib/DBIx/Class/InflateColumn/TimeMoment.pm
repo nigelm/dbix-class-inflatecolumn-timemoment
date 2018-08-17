@@ -120,7 +120,11 @@ sub register_column {
 
     my $data_type = lc( $info->{data_type} || '' );
 
-    return unless ( ( $data_type eq 'datetime' ) or ( $data_type eq 'timestamp' ) or ( $data_type eq 'date' ) );
+    return
+        unless ( ( $data_type eq 'datetime' )
+        or ( $data_type eq 'timestamp' )
+        or ( $data_type eq 'date' )
+        or ( $data_type eq 'timestamp with time zone' ) );
 
     # shallow copy to avoid unfounded(?) Devel::Cycle complaints
     my $infcopy = {%$info};
